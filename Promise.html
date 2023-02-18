@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script >
+    const posts=[{title: 'Post First', body: 'This is Post First'},
+               {title: 'Post Second', body: 'This is Post Second'}]
+function createpost(post){
+    return new Promise((resolve,reject)=>{
+        const t=true;
+        if(t){
+        posts.push(post);
+        resolve();
+        }else{
+            reject('ERROR');
+        }
+    })
+}
+function getpost(){
+    let output='';
+    for(let i=0;i<posts.length;i++){
+        output+=`<li>${posts[i].title}</li>`;
+    }
+    document.body.innerHTML=output;
+}
+function deletepost(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+        const t=true;
+        if(t){
+        posts.pop();
+        resolve();
+        }else{
+         reject('ERROR');
+        }
+        },5000)
+        
+    })
+}
+function updateLastUserActivityTime(){
+   return new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+        posts.body=new Date().getTime();
+      resolve(posts.body);
+      },1000);
+   })
+}
+Promise.all([createpost({title: 'Post Five', body: 'This is Post Five'}),updateLastUserActivityTime()
+,deletepost()])
+.then(()=>getpost())
+.catch((m)=>{console.log(m)})
+// console.log(posts);
+</script>
+</body>
+</html>
